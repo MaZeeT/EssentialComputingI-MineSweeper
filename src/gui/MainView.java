@@ -16,7 +16,7 @@ public class MainView {
     private static final VBox vBoxButtons = new VBox(newGame, settingButton);
     private static final HBox hBox = new HBox(vBoxButtons, spacePane);
 
-    private static void applyConfiguration(){
+    private static void applyConfiguration() {
         spacePane.setPrefSize(100, 200);
         hBox.setMinHeight(100);
         hBox.setMaxHeight(100);
@@ -29,7 +29,8 @@ public class MainView {
 
         settingButton.setOnAction(event -> {
             if (!vBoxButtons.getChildren().contains(save)) {
-                vBoxButtons.getChildren().add(save);}
+                vBoxButtons.getChildren().add(save);
+            }
 
             border.setCenter(SettingView.getPane());
         });
@@ -41,7 +42,7 @@ public class MainView {
         });
     }
 
-    public static Pane getBorderPane(){
+    public static Pane getBorderPane() {
         applyConfiguration();
         return border;
     }

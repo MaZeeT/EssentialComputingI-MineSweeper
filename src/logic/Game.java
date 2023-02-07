@@ -47,7 +47,7 @@ public class Game {
     //// Below are 3 core methods to the game, that handle the board mines and danger levels ////
     // generate an array of fields and sets the properties of the fields
     private void generateButtons() {
-        for (Plot plot:field.getPlots()) {
+        for (Plot plot : field.getPlots()) {
             FieldButton button = new FieldButton(field, plot, this);
 
             button.setPosition(plot.x, plot.y, Setting.getButtonSize());
@@ -72,8 +72,8 @@ public class Game {
         minefieldPane.getChildren().addAll(minefieldButtons);
     }
 
-    public void renderField(){
-        for (FieldButton button: minefieldButtons) {
+    public void renderField() {
+        for (FieldButton button : minefieldButtons) {
             button.drawClickedButton();
         }
     }

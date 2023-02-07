@@ -4,23 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6c4465-b2c1-4543-9779-48494ab08c24" name="Changes" comment="Upgraded java and javafx">
-      <change afterPath="$PROJECT_DIR$/src/gui/GameView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/MainView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/SettingView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/WelcomeView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Field.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Plot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Setting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Main.xml" afterDir="false" />
+    <list default="true" id="5d6c4465-b2c1-4543-9779-48494ab08c24" name="Changes" comment="Work on separating gui elements from game logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/AppController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/FieldButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/FieldButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Setting.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +84,7 @@
       <workItem from="1675618735324" duration="860000" />
       <workItem from="1675711080424" duration="12028000" />
       <workItem from="1675755415458" duration="904000" />
-      <workItem from="1675765014638" duration="3580000" />
+      <workItem from="1675765014638" duration="5383000" />
     </task>
     <task id="LOCAL-00001" summary="Upgraded java and javafx">
       <created>1675257510839</created>
@@ -106,7 +93,21 @@
       <option name="project" value="LOCAL" />
       <updated>1675257510839</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Work on separating gui elements from game logic">
+      <created>1675769235954</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1675769235954</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Work on separating gui elements from game logic">
+      <created>1675769278271</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1675769278271</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +126,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Upgraded java and javafx" />
-    <option name="LAST_COMMIT_MESSAGE" value="Upgraded java and javafx" />
+    <MESSAGE value="Work on separating gui elements from game logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Work on separating gui elements from game logic" />
   </component>
 </project>

@@ -11,19 +11,20 @@ public class FieldButton extends Button {
     private Plot plot;
     public Game game;
 
-    public FieldButton(){
+    public FieldButton() {
         this.plot = new Plot();
     }
-    public FieldButton (Plot plot){
+
+    public FieldButton(Plot plot) {
         this.plot = plot;
     }
 
-    public FieldButton (Field field, Plot plot){
+    public FieldButton(Field field, Plot plot) {
         this.field = field;
         this.plot = plot;
     }
 
-    public FieldButton (Field field, Plot plot, Game game){
+    public FieldButton(Field field, Plot plot, Game game) {
         this.field = field;
         this.plot = plot;
         this.game = game;
@@ -31,13 +32,13 @@ public class FieldButton extends Button {
 
     public void leftClick() {
         if (Field.isNotFlagged(plot)) {
-            field.explore(plot.x, plot.y);
+            field.explore(plot);
         }
     }
 
     public void middleClick() {
         if (plot.explored) {
-            field.exploreGrid(plot.x, plot.y);
+            field.exploreGrid(plot);
         }
     }
 

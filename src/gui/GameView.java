@@ -5,11 +5,12 @@ import logic.Game;
 
 public class GameView {
     Game minesweeper;
+
     public GameView() {
         minesweeper = new Game();
     }
 
-    public  Pane getPane() {
+    public Pane getPane() {
         return minesweeper.getMinefieldPane();
     }
 }

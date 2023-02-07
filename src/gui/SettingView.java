@@ -49,7 +49,7 @@ public class SettingView {
     }
 
     public static void saveSettings() {
-        try{
+        try {
             Setting.setXSize(
                     Integer.parseInt(xSizeText.getText()));
 

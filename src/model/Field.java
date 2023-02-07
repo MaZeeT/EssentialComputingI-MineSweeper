@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 
-
 public class Field {
     private int xSize;
     private int ySize;
@@ -14,7 +13,7 @@ public class Field {
     private boolean firstClick;
 
 
-    public Field(int xSize, int ySize, int numberOfMines){
+    public Field(int xSize, int ySize, int numberOfMines) {
         this.xSize = xSize;
         this.ySize = ySize;
         this.field = new Plot[xSize][ySize];
@@ -108,9 +107,7 @@ public class Field {
     }
 
     // set a field as explored and do some checks to see if it can be explored or it shall check nearby fields also
-    public void explore(int xCoor, int yCoor) {
-        Plot plot = field[xCoor][yCoor];
-
+    public void explore(Plot plot) {
         if (isNotFlagged(plot)) {
             plot.explored = true;
 
@@ -120,23 +117,23 @@ public class Field {
 
             // this make a recursive behaviour with explore() and exploreGrid() if there are no nearby mines
             if (plot.dangerLevel == 0) {
-                exploreGrid(xCoor, yCoor);
+                exploreGrid(plot);
             }
             firstClick = false;
         }
     }
 
     // check and click a 3x3 grid
-    public void exploreGrid(int xCoor, int yCoor) {
+    public void exploreGrid(Plot plot) {
         for (int j = -1; j <= 1; j++) {
             for (int i = -1; i <= 1; i++) {
 
                 // check to stay inside of array
-                if (isWithinFieldBoundaries(xCoor + i, yCoor + j)) {
+                if (isWithinFieldBoundaries(plot.x + i, plot.y + j)) {
 
-                    Plot plot = field[xCoor + i][yCoor + j];
-                    if (isNotExplored(plot) && isNotFlagged(plot)) {
-                        explore(xCoor + i, yCoor + j);
+                    Plot neirborPlot = field[plot.x + i][plot.y + j];
+                    if (isNotExplored(neirborPlot) && isNotFlagged(neirborPlot)) {
+                        explore(neirborPlot);
                     }
                 }
             }
@@ -189,10 +186,10 @@ public class Field {
         return false;
     }
 
-    public Plot[] getPlots(){
+    public Plot[] getPlots() {
         List<Plot> list = new ArrayList<>();
-        for (Plot[] plots:field) {
-            for (Plot plot:plots) {
+        for (Plot[] plots : field) {
+            for (Plot plot : plots) {
                 list.add(plot);
             }
         }
