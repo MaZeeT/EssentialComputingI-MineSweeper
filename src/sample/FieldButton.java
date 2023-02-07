@@ -1,56 +1,93 @@
 package sample;
 
 import javafx.scene.control.Button;
+import logic.Game;
+import model.Field;
+import model.Plot;
 
-// an extended class to give buttons some behavior wanted to make minefields
 public class FieldButton extends Button {
 
-    private boolean explored = false;
-    private boolean isMine = false;
-    private int dangerLevel;
-    private boolean flagged = false;
+    private Field field;
+    private Plot plot;
+    public Game game;
 
+    public FieldButton(){
+        this.plot = new Plot();
+    }
+    public FieldButton (Plot plot){
+        this.plot = plot;
+    }
 
-    // manage the text and color of a field
-    public void drawClickedButton() {
+    public FieldButton (Field field, Plot plot){
+        this.field = field;
+        this.plot = plot;
+    }
 
-        if (!explored && !flagged) {
-            setText("");
-            setStyle("");
-        }
+    public FieldButton (Field field, Plot plot, Game game){
+        this.field = field;
+        this.plot = plot;
+        this.game = game;
+    }
 
-        if (flagged) {
-            setText("F");
-            setStyle("-fx-background-color: #cd9ea2");
-        }
-
-        if (explored && isMine) {
-            setText("x");
-            setStyle("-fx-background-color: #6d6d6d");
-        }
-
-// colours for the fields depending on dangerLevel
-        if (explored && !isMine) {
-            setText(String.valueOf(dangerLevel));
-
-            if (dangerLevel <= 8) {
-                setStyle("-fx-background-color: rgba(255,84,0,0.76)");
-            }
-            if (dangerLevel <= 6) {
-                setStyle("-fx-background-color: rgba(255,165,0,0.82)");
-            }
-            if (dangerLevel <= 4) {
-                setStyle("-fx-background-color: rgba(173,255,47,0.7)");
-            }
-            if (dangerLevel <= 2) {
-                setStyle("-fx-background-color: rgba(0,0,255,0.34)");
-            }
-            if (dangerLevel == 0) {
-                setStyle("-fx-background-color: #d1d1d1");
-            }
+    public void leftClick() {
+        if (Field.isNotFlagged(plot)) {
+            field.explore(plot.x, plot.y);
         }
     }
 
+    public void middleClick() {
+        if (plot.explored) {
+            field.exploreGrid(plot.x, plot.y);
+        }
+    }
+
+    public void rightClick() {
+        field.toggleFlag(plot);
+    }
+
+    // manage the text and color of a field
+    public void drawClickedButton() {
+        setLayoutOfNotExploredAndNotFlaggedPlot();
+        setLayoutOfFlaggedPlot();
+        setLayoutOfExploredMine();
+        setLayoutOfExploredPlot();
+    }
+
+    private void setLayoutOfExploredPlot() {
+        if (plot.explored && !plot.isMine) {
+            setText(String.valueOf(plot.dangerLevel));
+            setDangerLevelColor();
+        }
+    }
+
+    private void setDangerLevelColor() {
+        if (plot.dangerLevel <= 8) setStyle("-fx-background-color: rgba(255,84,0,0.76)");
+        if (plot.dangerLevel <= 6) setStyle("-fx-background-color: rgba(255,165,0,0.82)");
+        if (plot.dangerLevel <= 4) setStyle("-fx-background-color: rgba(173,255,47,0.7)");
+        if (plot.dangerLevel <= 2) setStyle("-fx-background-color: rgba(0,0,255,0.34)");
+        if (plot.dangerLevel == 0) setStyle("-fx-background-color: #d1d1d1");
+    }
+
+    private void setLayoutOfExploredMine() {
+        if (plot.explored && plot.isMine) {
+            setText("x");
+            setStyle("-fx-background-color: #6d6d6d");
+        }
+    }
+
+    private void setLayoutOfFlaggedPlot() {
+        if (plot.flagged) {
+            setText("F");
+            setStyle("-fx-background-color: #cd9ea2");
+        }
+    }
+
+    private void setLayoutOfNotExploredAndNotFlaggedPlot() {
+        if (!plot.explored && !plot.flagged) {
+            setText("");
+            setStyle("");
+        }
+    }
 
     // setting the GUI-position of the field
     public void setPosition(int xCoor, int yCoor, double size) {
@@ -59,41 +96,5 @@ public class FieldButton extends Button {
         setPrefSize(size, size);
     }
 
-    // setter for explored with a check for flagged
-    public void setExplored(boolean _explored) {
-        if (!flagged) {
-            explored = _explored;
-        }
-    }
-
-    // getters and setters
-    public void setMine(Boolean _isMine) {
-        isMine = _isMine;
-    }
-
-    public boolean getMine() {
-        return isMine;
-    }
-
-    public boolean getExplored() {
-        return explored;
-    }
-
-    public void setDangerLevel(int _dangerLevel) {
-        dangerLevel = _dangerLevel;
-    }
-
-    public int getDangerLevel() {
-        return dangerLevel;
-    }
-
-    public void setFlagged(boolean _flagged) {
-        flagged = _flagged;
-    }
-
-    public boolean getFlagged() {
-        return flagged;
-    }
-
-} // end class
+}
 
