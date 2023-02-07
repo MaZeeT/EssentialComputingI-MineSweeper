@@ -3,7 +3,7 @@ package gui;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import model.Setting;
+import core.Setting;
 
 public class SettingView {
 

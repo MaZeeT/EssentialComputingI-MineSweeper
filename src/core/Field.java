@@ -1,4 +1,4 @@
-package model;
+package core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,11 @@ import java.util.Random;
 
 
 public class Field {
-    private int xSize;
-    private int ySize;
-    private Plot[][] field;
-    private int numberOfMines;
+    private final int xSize;
+    private final int ySize;
+    private final Plot[][] field;
+    private final List<Plot> plots;
+    private final int numberOfMines;
     private boolean firstClick;
 
 
@@ -17,6 +18,7 @@ public class Field {
         this.xSize = xSize;
         this.ySize = ySize;
         this.field = new Plot[xSize][ySize];
+        this.plots = new ArrayList<>();
         this.numberOfMines = numberOfMines;
         this.firstClick = true;
 
@@ -25,43 +27,29 @@ public class Field {
         calDangerLevel();
     }
 
-    public void generateFields() {
+    private void generateFields() {
         for (int j = 0; j < ySize; j++) {
             for (int i = 0; i < xSize; i++) {
-                Plot plot = new Plot();
-                plot.x = i;
-                plot.y = j;
-                plot.explored = false;
+                Plot plot = new Plot(i, j);
                 field[i][j] = plot;
+                plots.add(plot);
             }
         }
     }
 
-    public int countMines() {
-        int mineCount = 0;
-        for (int j = 0; j < ySize; j++) {
-            for (int i = 0; i < xSize; i++) {
-                if (field[i][j].isMine) {
-                    mineCount++;
-                }
-            }
-        }
-        return mineCount;
+    public long countMines() {
+        return plots.stream()
+                .filter(p -> p.isMine)
+                .count();
     }
 
-    public int countFlags() {
-        int flagCount = 0;
-        for (int j = 0; j < ySize; j++) {
-            for (int i = 0; i < xSize; i++) {
-                if (field[i][j].flagged) {
-                    flagCount++;
-                }
-            }
-        }
-        return flagCount;
+    public long countFlags() {
+        return plots.stream()
+                .filter(p -> p.flagged)
+                .count();
     }
 
-    public void calDangerLevel() {
+    private void calDangerLevel() {
         // Loop across the array
         for (int j = 0; j < ySize; j++) {
             for (int i = 0; i < xSize; i++) {
@@ -84,26 +72,26 @@ public class Field {
     }
 
     // replace mine if the first click is a mine
-    public void firstClick(Plot plot) {
+    private void firstClick(Plot plot) {
         plot.isMine = false;
         toMineOrNotToMine();
         calDangerLevel();
     }
 
-    public void toMineOrNotToMine() {
+    private void toMineOrNotToMine() {
         Random rand = new Random();
-
-        while (countMines() < numberOfMines) {
-            int xRand = rand.nextInt(xSize);
-            int yRand = rand.nextInt(ySize);
-
-            Plot plot = field[xRand][yRand];
-
-            // check if the field have a mine
-            if (!plot.isMine && isNotExplored(plot)) {
-                plot.isMine = true;
-            }
+        while (countMines() < numberOfMines){
+            List<Plot> miningOptions = plots.stream()
+                    .filter(p -> isNotAMine(p) && isNotExplored(p))
+                    .toList();
+            
+            int index = rand.nextInt(miningOptions.size());
+            miningOptions.get(index).isMine = true;
         }
+    }
+
+    private static boolean isNotAMine(Plot plot) {
+        return !plot.isMine;
     }
 
     // set a field as explored and do some checks to see if it can be explored or it shall check nearby fields also
@@ -146,7 +134,7 @@ public class Field {
         }
     }
 
-    public boolean isWithinFieldBoundaries(int xCoor, int yCoor) {
+    private boolean isWithinFieldBoundaries(int xCoor, int yCoor) {
         return 0 <= yCoor && yCoor < ySize && 0 <= xCoor && xCoor < xSize;
     }
 
@@ -154,47 +142,28 @@ public class Field {
         return !plot.flagged;
     }
 
-    public static boolean isNotExplored(Plot plot) {
+    private static boolean isNotExplored(Plot plot) {
         return !plot.explored;
     }
 
     public boolean isPlayerDead() {
-        for (int j = 0; j < ySize; j++) {
-            for (int i = 0; i < xSize; i++) {
-                if (field[i][j].isMine && field[i][j].explored) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return plots.stream()
+                .anyMatch(p -> p.isMine && p.explored);
     }
 
     public boolean isGameWon() {
-        int exploredFields = (xSize * ySize) - numberOfMines;
-        for (int j = 0; j < ySize; j++) {
-            for (int i = 0; i < xSize; i++) {
+        int plotsToBeExplored = (xSize * ySize) - numberOfMines;
 
-                if (!field[i][j].isMine && field[i][j].explored) {
-                    exploredFields--;
-                }
+        long exploredPlots =
+                plots.stream()
+                .filter(p -> isNotAMine(p) && p.explored)
+                .count();
 
-                if (exploredFields == 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return plotsToBeExplored == exploredPlots;
     }
 
-    public Plot[] getPlots() {
-        List<Plot> list = new ArrayList<>();
-        for (Plot[] plots : field) {
-            for (Plot plot : plots) {
-                list.add(plot);
-            }
-        }
-
-        return list.toArray(new Plot[0]);
+    public List<Plot> getPlots() {
+        return plots;
     }
 
 }

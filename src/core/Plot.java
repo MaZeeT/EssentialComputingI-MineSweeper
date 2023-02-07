@@ -1,4 +1,4 @@
-package model;
+package core;
 
 public class Plot {
     public int x;
@@ -7,4 +7,9 @@ public class Plot {
     public boolean isMine = false;
     public int dangerLevel;
     public boolean flagged = false;
+
+    public Plot(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 }

@@ -1,33 +1,17 @@
-package sample;
+package gui;
 
 import javafx.scene.control.Button;
-import logic.Game;
-import model.Field;
-import model.Plot;
+import core.Field;
+import core.Plot;
 
 public class FieldButton extends Button {
 
-    private Field field;
-    private Plot plot;
-    public Game game;
-
-    public FieldButton() {
-        this.plot = new Plot();
-    }
-
-    public FieldButton(Plot plot) {
-        this.plot = plot;
-    }
+    private final Field field;
+    private final Plot plot;
 
     public FieldButton(Field field, Plot plot) {
         this.field = field;
         this.plot = plot;
-    }
-
-    public FieldButton(Field field, Plot plot, Game game) {
-        this.field = field;
-        this.plot = plot;
-        this.game = game;
     }
 
     public void leftClick() {
@@ -91,9 +75,9 @@ public class FieldButton extends Button {
     }
 
     // setting the GUI-position of the field
-    public void setPosition(int xCoor, int yCoor, double size) {
-        setLayoutX(xCoor * size);
-        setLayoutY(yCoor * size);
+    public void setPosition(Plot plot, double size) {
+        setLayoutX(plot.x * size);
+        setLayoutY(plot.y * size);
         setPrefSize(size, size);
     }
 
